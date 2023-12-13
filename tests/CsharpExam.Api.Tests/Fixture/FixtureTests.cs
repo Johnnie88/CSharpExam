@@ -1,4 +1,4 @@
-﻿namespace CsharpExam.Api.Tests.Fixture
+﻿namespace CsharpExam.Api.UnitTests.Fixture
 {
     using System.Threading.Tasks;
     using CsharpExam.Api.Interfaces;
@@ -21,7 +21,7 @@
         /// </summary>
         public Task CreateDbAsync()
         {
-            var connectionString = this.configurationSettings.DefaultConnection;
+            var connectionString = configurationSettings.ConnectionStrings.DefaultConnection;
             var sqlConnection = new SqlConnection(connectionString);
             var sql = "CREATE DATABASE CsharpExamTests";
             var sqlCommand = new SqlCommand(sql, sqlConnection);
@@ -37,7 +37,7 @@
         /// </summary>
         public Task DropDbAsync()
         {
-            var connectionString = this.configurationSettings.DefaultConnection;
+            var connectionString = configurationSettings.ConnectionStrings.DefaultConnection;
             var sqlConnection = new SqlConnection(connectionString);
             var sql = "DROP DATABASE CsharpExamTests";
             var sqlCommand = new SqlCommand(sql, sqlConnection);

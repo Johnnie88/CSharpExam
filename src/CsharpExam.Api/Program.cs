@@ -12,9 +12,19 @@ namespace CsharpExam.Api
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            IConfigurationSettings configurationSettings = builder.Configuration.Get<ConfigurationSettings>();
+            // add the app settings values considering the environment variables
+            var conf = new ConfigurationBuilder()
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("conf/appsettings.json", optional: false, reloadOnChange: true)
+                .AddEnvironmentVariables()
+                .Build();
 
-            builder.Services.AddSingleton<IConfigurationSettings>(configurationSettings);
+            builder.Services.AddSingleton<IConfigurationSettings>(
+                conf.GetSection("ConfigurationSettings")
+                .Get<ConfigurationSettings>());
+
+            // add the database context
+            builder.Services.AddSingleton<IDbContext, DbContext>();
 
             builder.Services.AddSingleton<OrderRepository, OrderRepository>();
             builder.Services.AddSingleton<IOrderBusiness, OrderBusiness>();
