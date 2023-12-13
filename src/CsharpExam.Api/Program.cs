@@ -1,15 +1,17 @@
 namespace CsharpExam.Api
 {
+    using CsharpExam.Api.Interfaces;
+    using CsharpExam.Api.Model;
+
     public class Program
     {
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            IConfigurationSettings configurationSettings = builder.Configuration.Get<ConfigurationSettings>();
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
@@ -25,7 +27,6 @@ namespace CsharpExam.Api
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 
