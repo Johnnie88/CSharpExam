@@ -1,4 +1,4 @@
-﻿namespace CsharpExam.Api.Tests.Configuration
+﻿namespace CsharpExam.Api.UnitTests.Configuration
 {
     using CsharpExam.Api.Interfaces;
 

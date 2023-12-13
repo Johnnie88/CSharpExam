@@ -1,4 +1,4 @@
-﻿namespace CsharpExam.Api.ControllersTests
+﻿namespace CsharpExam.Api.UnitTests.ControllerTests
 {
     using CsharpExam.Api.Controllers;
     using CsharpExam.Api.Entities;
