@@ -5,5 +5,6 @@
     public interface IOrderBusiness
     {
         Task<OrderModel> GetOrderByIdAsync(int Id);
+
     }
 }

@@ -1,10 +1,10 @@
 ﻿namespace CsharpExam.Api.ControllersTests
 {
-    using System;
     using CsharpExam.Api.Controllers;
     using CsharpExam.Api.Entities;
     using CsharpExam.Api.Interfaces;
     using Dapper;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.Data.SqlClient;
     using Microsoft.Extensions.Logging;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -36,7 +36,9 @@
         {
             // Arrange
             int orderId = 1;
-            var expectedOrder = new OrderModel { Id = orderId };
+            decimal totalAmount = 100;
+
+            var expectedOrder = new OrderModel { Id = orderId, TotalAmount = totalAmount };
 
             await DeleteOrderDataBaseAsync();
 
@@ -48,7 +50,12 @@
             var result = await orderController.GetOrderByIdAsync(orderId);
 
             // Assert
-            Assert.IsNotNull(result);;
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.Result is OkObjectResult);
+            Assert.IsTrue((result.Result as OkObjectResult).Value is OrderModel);
+            Assert.AreEqual((result.Result as OkObjectResult).StatusCode, 200);
+            Assert.AreEqual(((result.Result as OkObjectResult).Value as OrderModel).Id, orderId);
+            Assert.AreEqual(((result.Result as OkObjectResult).Value as OrderModel).TotalAmount, totalAmount);
         }
 
         private async Task AddOrderDataBaseAsync()
