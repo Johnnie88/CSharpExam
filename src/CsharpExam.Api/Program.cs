@@ -1,5 +1,8 @@
 namespace CsharpExam.Api
 {
+    using CsharpExam.Api.Business;
+    using CsharpExam.Api.DataBases;
+    using CsharpExam.Api.Entities;
     using CsharpExam.Api.Interfaces;
     using CsharpExam.Api.Model;
 
@@ -10,6 +13,12 @@ namespace CsharpExam.Api
             var builder = WebApplication.CreateBuilder(args);
 
             IConfigurationSettings configurationSettings = builder.Configuration.Get<ConfigurationSettings>();
+
+            builder.Services.AddSingleton<IConfigurationSettings>(configurationSettings);
+
+            builder.Services.AddSingleton<OrderRepository, OrderRepository>();
+            builder.Services.AddSingleton<IOrderBusiness, OrderBusiness>();
+            builder.Services.AddTransient<IRepositoryBase<OrderModel>, OrderRepository>();
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();

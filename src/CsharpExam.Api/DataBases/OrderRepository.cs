@@ -7,10 +7,13 @@
     using Dapper;
     using Microsoft.Data.SqlClient;
 
+    /// <summary>
+    /// Defines the <see cref="OrderRepository" />.
+    /// </summary>
     public class OrderRepository : IRepositoryBase<OrderModel>
     {
-        private IConfiguration _configuration;
-        private ILogger<OrderRepository> _logger;
+        private readonly IConfiguration _configuration;
+        private readonly ILogger<OrderRepository> _logger;
 
         public OrderRepository(IConfiguration configuration,
             ILogger<OrderRepository> logger
@@ -22,9 +25,11 @@
 
         public async Task<OrderModel> GetAsync(int Id)
         {
+            _logger.LogInformation($"GetAsync {Id}");
+
             using (var connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection")))
             {
-                var query = "SELECT * FROM Orders WHERE Id = @Id";
+                var query = "SELECT * FROM [Order] WHERE Id = @Id";
 
                 var result = await connection.QueryFirstOrDefaultAsync<OrderModel>(query, new { Id });
 

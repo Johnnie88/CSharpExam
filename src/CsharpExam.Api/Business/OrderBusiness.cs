@@ -1,11 +1,25 @@
 ﻿namespace CsharpExam.Api.Business
 {
     using System.Threading.Tasks;
+    using CsharpExam.Api.DataBases;
     using CsharpExam.Api.Entities;
     using CsharpExam.Api.Interfaces;
 
+    /// <summary>
+    /// Defines the <see cref="OrderBusiness" />.
+    /// </summary>
     public class OrderBusiness : IOrderBusiness
     {
+        /// <summary>
+        /// Defines the _OrderRepository.
+        /// </summary>
+        private OrderRepository _OrderRepository;
+
+        public OrderBusiness(OrderRepository orderRepository)
+        {
+            _OrderRepository = orderRepository;
+        }
+
         /// <summary>
         /// Gets the order by id.
         /// </summary>
@@ -16,14 +30,9 @@
         {
             try
             {
-                var result = await Task.FromResult(new OrderModel
-                {
-                    Id = Id,
-                    TotalAmount = 100
-                });
+                var result = await _OrderRepository.GetAsync(Id);
 
                 return result;
-
             }
             catch (Exception ex)
             {
