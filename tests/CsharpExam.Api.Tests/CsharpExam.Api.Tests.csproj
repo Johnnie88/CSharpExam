@@ -44,7 +44,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CsharpExam.Api\CsharpExam.Api.csproj" />
+    <ProjectReference Include="..\..\src\CsharpExam.Api\CsharpExam.Api.csproj" />
   </ItemGroup>
 
 </Project>
